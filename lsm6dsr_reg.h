@@ -26,6 +26,8 @@
 extern "C" {
 #endif
 
+#define float_t float
+
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 #include <stddef.h>
