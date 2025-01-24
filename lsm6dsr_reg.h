@@ -3690,6 +3690,7 @@ int32_t lsm6dsr_batch_counter_threshold_get(const stmdev_ctx_t *ctx,
                                             uint16_t *val);
 
 int32_t lsm6dsr_fifo_data_level_get(const stmdev_ctx_t *ctx, uint16_t *val);
+int32_t lsm6dsr_fifo_data_level_get_fast(const stmdev_ctx_t *ctx, uint16_t *val);
 
 int32_t lsm6dsr_fifo_status_get(const stmdev_ctx_t *ctx,
                                 lsm6dsr_fifo_status2_t *val);

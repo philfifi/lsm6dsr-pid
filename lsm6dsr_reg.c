@@ -7367,8 +7367,38 @@ int32_t lsm6dsr_batch_counter_threshold_get(const stmdev_ctx_t *ctx,
   * @retval        Interface status (MANDATORY: return 0 -> no Error).
   *
   */
+int32_t lsm6dsr_fifo_data_level_get_fast(const stmdev_ctx_t *ctx, uint16_t *val)
+{
+  int32_t ret;
+
+  lsm6dsr_reg_t fifo_status[2];
+
+  ret = lsm6dsr_read_reg(ctx, LSM6DSR_FIFO_STATUS1,
+                         (uint8_t*) fifo_status, 2);
+
+  if (ret == 0)
+  {
+    *val = fifo_status[1].fifo_status2.diff_fifo;
+    *val = *val << 8;
+    *val += fifo_status[0].fifo_status1.diff_fifo;
+  }
+
+  return ret;
+}
+
+
+/**
+  * @brief  Number of unread sensor data (TAG + 6 bytes) stored in FIFO.[get]
+  *
+  * @param  ctx    Read / write interface definitions.(ptr)
+  * @param  val    Change the values of diff_fifo in reg FIFO_STATUS1
+  * @retval        Interface status (MANDATORY: return 0 -> no Error).
+  *
+  */
 int32_t lsm6dsr_fifo_data_level_get(const stmdev_ctx_t *ctx, uint16_t *val)
 {
+
+
   lsm6dsr_fifo_status1_t fifo_status1;
   lsm6dsr_fifo_status2_t fifo_status2;
   int32_t ret;
@@ -7387,6 +7417,7 @@ int32_t lsm6dsr_fifo_data_level_get(const stmdev_ctx_t *ctx, uint16_t *val)
 
   return ret;
 }
+
 
 /**
   * @brief  Smart FIFO status.[get]
