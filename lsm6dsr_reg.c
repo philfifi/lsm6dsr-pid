@@ -7376,6 +7376,11 @@ int32_t lsm6dsr_fifo_data_level_get_fast(const stmdev_ctx_t *ctx, uint16_t *val)
   ret = lsm6dsr_read_reg(ctx, LSM6DSR_FIFO_STATUS1,
                          (uint8_t*) fifo_status, 2);
 
+  if (fifo_status[1].fifo_status2.fifo_ovr_ia ||
+      fifo_status[1].fifo_status2.fifo_full_ia) {
+        return -1; // Something wrong
+  }
+
   if (ret == 0)
   {
     *val = fifo_status[1].fifo_status2.diff_fifo;
